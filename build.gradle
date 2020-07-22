@@ -2,16 +2,24 @@ plugins {
     id 'java'
 }
 
+group 'org.example'
+version '1.0-SNAPSHOT'
+
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile 'org.testng:testng:7.0.0'
-    compile 'org.seleniumhq.selenium:selenium-java:3.141.59'
-
-}
-
 test {
     useTestNG()
+    systemProperty 'java.util.logging.config.file', 'logging.properties'
+}
+
+dependencies {
+    compile group: 'org.testng', name: 'testng', version: '6.14.3'
+    compile 'com.vk.api:sdk:0.5.12'
+
+    // Logging
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.7'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
 }
