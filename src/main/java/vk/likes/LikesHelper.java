@@ -1,6 +1,7 @@
 package vk.likes;
 
 import com.vk.api.sdk.actions.Likes;
+import com.vk.api.sdk.client.AbstractQueryBuilder;
 import com.vk.api.sdk.client.ApiRequest;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
@@ -14,11 +15,13 @@ import com.vk.api.sdk.objects.likes.responses.IsLikedResponse;
 import com.vk.api.sdk.queries.likes.LikesType;
 import java.util.Map;
 
+/**
+ * VK API client wrapper for "Likes" methods testing.
+ */
 public class LikesHelper {
     private final Likes client;
     private static final int DEFAULT_RETRY_TIMEOUT = 1000;
     private static final int DEFAULT_RETRY_REQUEST_COUNT = 3;
-
 
     public LikesHelper(VkApiClient vk) {
         client = vk.likes();
@@ -46,15 +49,16 @@ public class LikesHelper {
                 client.isLiked(
                         actor,
                         LikesType.valueOf(params.get("type")),
-                        Integer.parseInt(params.get("item_id"))
-        ));
+                        Integer.parseInt(params.get("item_id")))
+                        .ownerId(Integer.parseInt(params.get("owner_id"))));
     }
 
     public GetListResponse getLikes(UserActor actor, Map<String, String> params)
             throws ClientException, ApiException, InterruptedException {
         return safeExecute(
                 client.getList(actor, LikesType.valueOf(params.get("type")))
-                        .itemId(Integer.parseInt(params.get("item_id"))));
+                        .itemId(Integer.parseInt(params.get("item_id")))
+                        .ownerId(Integer.parseInt(params.get("owner_id"))));
     }
 
     public AddResponse addLike(UserActor actor, Map<String, String> params)
@@ -63,8 +67,8 @@ public class LikesHelper {
                 client.add(
                         actor,
                         LikesType.valueOf(params.get("type")),
-                        Integer.parseInt(params.get("item_id"))
-                ));
+                        Integer.parseInt(params.get("item_id")))
+                        .ownerId(Integer.parseInt(params.get("owner_id"))));
     }
 
     public DeleteResponse deleteLike(UserActor actor, Map<String, String> params)
@@ -73,7 +77,7 @@ public class LikesHelper {
                 client.delete(
                         actor,
                         LikesType.valueOf(params.get("type")),
-                        Integer.parseInt(params.get("item_id"))
-                ));
+                        Integer.parseInt(params.get("item_id")))
+                        .ownerId(Integer.parseInt(params.get("owner_id"))));
     }
 }

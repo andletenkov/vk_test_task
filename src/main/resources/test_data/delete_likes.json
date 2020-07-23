@@ -1,19 +1,21 @@
 [
   {
-    "name": "Delete like from photo",
-    "actor": "BASIC",
+    "name": "Delete like from avatar",
+    "actor": "basic",
     "params": {
       "type": "PHOTO",
-      "item_id": "457241282"
+      "item_id": "456264771",
+      "owner_id": "1"
     },
     "expected": "DeleteResponse\\{likes=\\d+?}"
   },
   {
     "name": "Delete like from wall post",
-    "actor": "BASIC",
+    "actor": "basic",
     "params": {
-      "type": "PHOTO",
-      "item_id": "457241282"
+      "type": "POST",
+      "item_id": "2442097",
+      "owner_id": "1"
     },
     "expected": "DeleteResponse\\{likes=\\d+?}"
   }

@@ -11,8 +11,8 @@ repositories {
 
 test {
     useTestNG() {
-        includeGroups 'positive'
-        includeGroups 'negative'
+        def groups = System.getProperty('groups', 'positive')
+            includeGroups groups
     }
 }
 

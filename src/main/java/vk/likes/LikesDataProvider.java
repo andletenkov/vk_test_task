@@ -2,6 +2,9 @@ package vk.likes;
 import org.testng.annotations.DataProvider;
 import vk.TestData;
 
+/**
+ * Data provider class for "Likes" API methods testing.
+ */
 public class LikesDataProvider {
 
     @DataProvider

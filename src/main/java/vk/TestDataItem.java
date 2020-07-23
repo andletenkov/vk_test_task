@@ -1,6 +1,9 @@
 package vk;
 import java.util.Map;
 
+/**
+ * Object-like representation of data for single test.
+ */
 public class TestDataItem {
     private final String name;
     private final String actor;
@@ -9,7 +12,7 @@ public class TestDataItem {
 
 
     public TestDataItem(String name, String actor, Map<String, String> params, String expected){
-        this.name= name;
+        this.name = name;
         this.actor = actor;
         this.params = params;
         this.expected = expected;

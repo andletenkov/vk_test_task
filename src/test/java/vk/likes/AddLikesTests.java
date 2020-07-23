@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import vk.ActorFactory;
 import vk.BaseTest;
 import vk.TestDataItem;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -29,7 +28,7 @@ public class AddLikesTests extends BaseTest {
         var params = testData.getParams();
         Test testClass = method.getAnnotation(Test.class);
 
-        LOG.info(String.format("Running test: %s [%s]", testClass.testName(), testData.getName()));
+        LOG.info(String.format("Running test: %s", testData.getName()));
         actor = ActorFactory.getUserActor(testData.getActor());
 
         if (!Arrays.asList(testClass.groups()).contains("positive")){

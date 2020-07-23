@@ -1,20 +1,32 @@
 [
   {
     "name": "item ID less than 0",
-    "actor": "BASIC",
+    "actor": "basic",
     "params": {
       "type": "PHOTO",
-      "item_id": "-1"
+      "item_id": "-1",
+      "owner_id": "1"
     },
     "expected": ".+? item_id should be positive"
   },
   {
     "name": "Unauthorized actor",
-    "actor": "NO_AUTH",
+    "actor": "no_auth",
     "params": {
       "type": "PHOTO",
-      "item_id": "31321532"
+      "item_id": "456264771",
+      "owner_id": "1"
     },
     "expected": ".+? User authorization failed: invalid access_token .+?"
+  },
+  {
+    "name": "Non existing object to like",
+    "actor": "basic",
+    "params": {
+      "type": "AUDIO",
+      "item_id": "9999999",
+      "owner_id": "1"
+    },
+    "expected": ".+? object not found"
   }
 ]
