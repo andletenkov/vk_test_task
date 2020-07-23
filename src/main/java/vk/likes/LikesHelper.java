@@ -27,6 +27,9 @@ public class LikesHelper {
         client = vk.likes();
     }
 
+    /**
+     * Client execute method wrapper to get rid of ApiTooManyException
+     */
     @SuppressWarnings("unchecked")
     private <T> T safeExecute(ApiRequest request) throws InterruptedException, ClientException, ApiException {
         int retries = DEFAULT_RETRY_REQUEST_COUNT;
