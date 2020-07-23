@@ -1,10 +1,14 @@
 [
   {
+    "user": "BASIC_USER",
     "type": "PHOTO",
-    "item_id": "457241282"
+    "item_id": "457241282",
+    "expected": "AddResponse\\{likes=\\d+?}"
   },
   {
+    "user": "BASIC_USER",
     "type": "PHOTO",
-    "item_id": "457241282"
+    "item_id": "457241282",
+    "expected": "AddResponse\\{likes=\\d+?}"
   }
 ]

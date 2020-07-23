@@ -10,8 +10,10 @@ repositories {
 }
 
 test {
-    useTestNG()
-    systemProperty 'java.util.logging.config.file', 'logging.properties'
+
+    useTestNG() {
+        includeGroups 'likes'
+    }
 }
 
 dependencies {
