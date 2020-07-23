@@ -1,20 +1,20 @@
 [
   {
-    "name": "Add like to photo",
+    "name": "Delete like from photo",
     "actor": "BASIC",
     "params": {
       "type": "PHOTO",
       "item_id": "457241282"
     },
-    "expected": "AddResponse\\{likes=\\d+?}"
+    "expected": "DeleteResponse\\{likes=\\d+?}"
   },
   {
-    "name": "Add like to wall post",
+    "name": "Delete like from wall post",
     "actor": "BASIC",
     "params": {
       "type": "PHOTO",
       "item_id": "457241282"
     },
-    "expected": "AddResponse\\{likes=\\d+?}"
+    "expected": "DeleteResponse\\{likes=\\d+?}"
   }
 ]

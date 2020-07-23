@@ -1,11 +1,12 @@
 package vk.likes;
-
 import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import com.vk.api.sdk.objects.likes.responses.AddResponse;
+import com.vk.api.sdk.objects.likes.responses.DeleteResponse;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import vk.ActorFactory;
@@ -17,14 +18,15 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddLikesTests extends BaseTest {
+public class DeleteLikesTests extends BaseTest {
     private static final LikesHelper CLIENT = new LikesHelper(
             new VkApiClient(HttpTransportClient.getInstance())
     );
+    private UserActor actor;
 
 
     @BeforeMethod(alwaysRun = true)
-    public void setUp(Object[] paramsObject, Method method) throws IOException {
+    public void setUp(Object[] paramsObject, Method method, ITestContext ctx) throws IOException {
         var testData = extractData(paramsObject);
         var params = testData.getParams();
         Test testClass = method.getAnnotation(Test.class);
@@ -37,8 +39,8 @@ public class AddLikesTests extends BaseTest {
         }
 
         try {
-            if (CLIENT.isLiked(actor, params).isLiked()) {
-                CLIENT.deleteLike(actor, params);
+            if (!CLIENT.isLiked(actor, params).isLiked()) {
+                CLIENT.addLike(actor, params);
             }
         } catch (Exception e){
             LOG.warn("Error in test setup: " + e.getMessage());
@@ -46,13 +48,13 @@ public class AddLikesTests extends BaseTest {
     }
 
     @Test(
-            dataProvider = "addLikesValidData",
+            dataProvider = "deleteLikesValidData",
             dataProviderClass = LikesDataProvider.class,
             groups = {"positive"},
             suiteName = "likes"
     )
-    public void addLikeToItem(TestDataItem testData) throws ClientException, ApiException, InterruptedException {
-        AddResponse response = CLIENT.addLike(actor, testData.getParams());
+    public void deleteLikeFromItem(TestDataItem testData) throws ClientException, ApiException, InterruptedException {
+        DeleteResponse response = CLIENT.deleteLike(actor, testData.getParams());
         LOG.info("Got response: " + response);
 
         List<Integer> likeListAfter = CLIENT
@@ -63,21 +65,22 @@ public class AddLikesTests extends BaseTest {
                 response.toString().matches(testData.getExpected()),
                 "Actual response doesn't match expected"
         );
-        Assert.assertTrue(
+        Assert.assertFalse(
                 likeListAfter.contains(actor.getId()),
-                "Actor ID not present in likes list");
+                "Actor ID present in likes list"
+        );
     }
 
     @Test(
-            testName = "Add likes with invalid parameters",
+            testName = "Delete likes with invalid parameters",
             dataProvider = "likesInvalidData",
             dataProviderClass = LikesDataProvider.class,
             groups = {"negative"},
             suiteName = "likes"
     )
-    public void addLikeInvalidParams(TestDataItem testData) {
+    public void deleteLikeInvalidParams(TestDataItem testData) {
         try {
-            CLIENT.addLike(actor, testData.getParams());
+            CLIENT.deleteLike(actor, testData.getParams());
             throw new AssertionError("Expected exception was not thrown");
         } catch (ClientException | ApiException | InterruptedException expected) {
             var message = expected.getMessage();
@@ -85,7 +88,7 @@ public class AddLikesTests extends BaseTest {
 
             Assert.assertTrue(
                     message.matches(testData.getExpected()),
-                    "Actual exception doesn't match expected"
+                    "Actual exception doesn't match with expected "
             );
         }
     }

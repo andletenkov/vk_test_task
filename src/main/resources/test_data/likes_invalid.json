@@ -1,0 +1,20 @@
+[
+  {
+    "name": "item ID less than 0",
+    "actor": "BASIC",
+    "params": {
+      "type": "PHOTO",
+      "item_id": "-1"
+    },
+    "expected": ".+? item_id should be positive"
+  },
+  {
+    "name": "Unauthorized actor",
+    "actor": "NO_AUTH",
+    "params": {
+      "type": "PHOTO",
+      "item_id": "31321532"
+    },
+    "expected": ".+? User authorization failed: invalid access_token .+?"
+  }
+]

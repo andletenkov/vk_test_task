@@ -1,19 +1,40 @@
 package vk;
 
 import com.vk.api.sdk.client.actors.UserActor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Properties;
 
 public class ActorFactory {
-    public static UserActor getActor(String type) {
-        ActorType enumType = ActorType.valueOf(type);
-        switch (enumType) {
-            case BASIC_USER:
-                return new UserActor(8922197,
-                        "2b78f5dd3dac588902300d2756676a61ae545045cc3f53e441f7376229bda5d0c33564d9a965bdd81617e");
-            case BASIC_GROUP:
-            case NO_AUTH_USER:
-            default:
-                return new UserActor(1,
-                        "1");
+    private static final String ACTOR_PROPERTIES_FILE_NAME = "actor.properties";
+
+
+    public static UserActor getUserActor(String type) throws IOException {
+        Path propertiesPath = FileSystems
+                .getDefault()
+                .getPath(System.getProperty("user.dir"), ACTOR_PROPERTIES_FILE_NAME);
+
+        FileInputStream fis = null;
+        Properties property = new Properties();
+
+        try {
+            fis = new FileInputStream(propertiesPath.toString());
+            property.load(fis);
+
+            Integer actorId = Integer.parseInt(property.getProperty(String.format("%s.id", type)));
+            String accessToken = property.getProperty(String.format("%s.token", type));
+
+            return new UserActor(actorId, accessToken);
+
+        } finally {
+            if (fis != null) {
+                fis.close();
+            }
         }
+
+
     }
 }
+

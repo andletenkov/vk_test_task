@@ -1,18 +1,21 @@
 package vk;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.vk.api.sdk.client.actors.UserActor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseTest {
 
-    @SuppressWarnings("unchecked")
-    protected static Map<String, String> extractParameters(Object[] paramsObject) {
+    protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    protected UserActor actor;
+
+    protected static TestDataItem extractData(Object[] paramsObject) {
         if (paramsObject != null && paramsObject.length > 0) {
-            Object params = paramsObject[0];
-            if (!(params instanceof HashMap)) {
-                throw new RuntimeException("Invalid test parameters format: " + params.getClass());
+            Object data = paramsObject[0];
+            if (!(data instanceof TestDataItem)) {
+                throw new RuntimeException("Invalid test parameters format: " + data.getClass());
             }
-            return (Map<String, String>) params;
+            return (TestDataItem) data;
         } else {
             throw new RuntimeException("Test parameters object is empty");
         }

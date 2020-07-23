@@ -4,6 +4,9 @@
 # IDE files
 .idea
 
+# Production properties
+actor.properties
+
 # Gradle files
 .gradle
 build/
