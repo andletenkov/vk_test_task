@@ -2,6 +2,7 @@ package vk;
 
 import com.vk.api.sdk.client.actors.UserActor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -16,11 +17,26 @@ public class ActorFactory {
 
     /**
      * User actor factory method.
-     * @param  type string value given by DataProvider.
-     * @return UserActor instance.
-     * @throws IOException if unable read from properties file.
      */
     public static UserActor getUserActor(String type) throws IOException {
+        switch(UserActorType.getByValue(type)){
+            case BASIC:
+                return fromProperties(type);
+            case NO_AUTH:
+                return new UserActor(1234, "some_very_secret_token");
+            default:
+                return new UserActor(6789, "some_very_secret_token");
+
+        }
+    }
+
+    /**
+     * Reads actor data from properties file.
+     *  @param  type string value given by DataProvider.
+     *  @return UserActor instance.
+     *  @throws IOException if unable read from properties file.
+     */
+    private static UserActor fromProperties(String type) throws IOException {
         FileInputStream fis = null;
         Properties property = new Properties();
 
@@ -38,8 +54,6 @@ public class ActorFactory {
                 fis.close();
             }
         }
-
-
     }
 }
 
