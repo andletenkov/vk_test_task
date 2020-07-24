@@ -6,4 +6,5 @@
 Тесты разделены на две группы - позитивные и негативные (`positive` и `negative`, соответственно).
 
 # Запуск тестов
-`gradlew clean test --info -Dgroups=имя_группы`, где `имя_группы` - `positive` или `negative`
+1. Создать файл `actor.properties` с реальными пользовательскими данными (ID, access_token) по примеру `example.actor.properties`
+2. Выполнить `gradlew clean test --info -Dgroups=имя_группы`, где `имя_группы` - `positive` или `negative`
