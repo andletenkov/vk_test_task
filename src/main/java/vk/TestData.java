@@ -7,12 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Test data files serializer for DDT approach.
  */
 public class TestData {
-    private static final String TEST_DATA_PATH = "src.main.resources.test_data";
+    private static final String TEST_DATA_PATH = "/src/main/resources/test_data/";
 
     /**
      * Serializes JSON file to array of test data objects.
@@ -20,16 +21,11 @@ public class TestData {
      * @return TestDataItem array.
      */
     public static TestDataItem[] fromJson(String fileName) {
-        String actualTestDataDir = TEST_DATA_PATH.replace(".", System.getProperty("file.separator"));
+        String fullPath = System.getProperty("user.dir") + TEST_DATA_PATH + fileName;
 
-        Path path = FileSystems
-                .getDefault()
-                .getPath(System.getProperty("user.dir"), actualTestDataDir, fileName);
-
-        Gson gson = new Gson();
         try {
-            JsonReader reader = new JsonReader(new FileReader(path.toString()));
-            return gson.fromJson(reader, TestDataItem[].class);
+            JsonReader reader = new JsonReader(new FileReader(fullPath));
+            return new Gson().fromJson(reader, TestDataItem[].class);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Unable to locate test data file: " + fileName);
         }

@@ -5,7 +5,7 @@
 .idea
 
 # Production properties
-actor.properties
+src/main/resources/actor.properties
 
 # Gradle files
 .gradle
